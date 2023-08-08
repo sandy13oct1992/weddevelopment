@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <h1>Object storage in local storage</h1>
+
+    </body>
+    <script>
+        let myobj={
+            name: "sunny",
+            age: 29
+        };
+
+        //to convert object into string formate
+        let myobj_serialised=JSON.stringify(myobj);
+        // to store into local storage
+        localStorage.setItem('myobj', myobj_serialised);
+    </script>
+</html>
