@@ -139,3 +139,25 @@ function removeItem(e)
   
   }
 }
+
+function filter(e)
+{
+  // convert text to lowercase
+  var text = e.target.value.tolowerCase();
+  // get list
+  var items=document.getElementsByTagName('item');
+  //convert to array
+  Array.from(items).forEach(function(item))
+  {
+    var itemName= items.firstChild.textContent;
+    if(itemName.tolowerCase().indexOf(text)!=-1)
+    {
+      items.style.display='block';
+
+    }
+    else
+    {
+      items.style.display='none';
+    }
+  }
+}
