@@ -2,26 +2,73 @@
     <body>
         <form onsubmit="SaveToLocalStorage(event)">
             <label>name</label>
-            <input type="text" name="username" required/>
+            <input type="text" name="username" id="usernameInputTag" required/>
             <label>Email</label>
-            <input type="email" name="Email" required/>
+            <input type="email" name="Email" id="emailInputTag" required/>
             <label>Phone no</label>
-            <input type="tel" name="phonenumber" />
+            <input type="tel" name="phonenumber" id="phoneInputTag" />
             <button>submit</button>
 
         </form>
+        <ul id="listofitems"></ul>
         <script>
             function SaveToLocalStorage(event)
-            {
-                event.preventDefault();
+              {
+                 event.preventDefault();
                 const name=event.target.username.value;
                 const email=event.target.Email.value;
                 const phonenumber=event.target.phonenumber.value;
-                localStorage.setItem('name', name);
-                localStorage.setItem('email', email);
-                localStorage.setItem('phone_no',phonenumber);
-
+                //localStorage.setItem('name', name);
+                //localStorage.setItem('email', email);
+                //localStorage.setItem('phone_no',phonenumber);
             }
+            
+        let myobj={
+            name,
+            email, 
+            phonenumber
+        };
+
+        //to convert object into string formate
+        //let myobj_serialised=JSON.stringify(myobj);
+        // to store into local storage
+        localStorage.setItem(myobj.email, JSON.stringify(myobj));
+        showuseronscreen(myobj);
+        // qsn no 12 & 13 (main problem is that things are getting displayed on screen)
+        function showuseronscreen(myobj)
+        {
+          const parentEle=document.getElemenetById('listofitems');
+
+         // parentEle.innerHTML=<li> ${myobj.name} - ${myobj.email} - ${myobj.phonenumber}</li>;
+        
+         const childEle= document.createElement('li');
+         childEle.textContent=myobj.name+ ' - '+myobj.email+' - '+myobj.phonenumber;
+         
+         const deletebutton=document.createElement('input')
+         deletebutton.type='button';
+         deletebutton.value='delete';
+
+         deletebutton.onclick=() => {
+            localStorage.removeItem(myobj.email);
+            parentEle.removeChild(childEle);
+         }
+
+         //qsn no 14 
+         /*const edit=document.createElement('input')
+         deletebutton.type='button';
+         deletebutton.value='edit';
+
+         deletebutton.onclick=() => {
+            localStorage.removeItem(myobj.email);
+            parentEle.removeChild(childEle);
+            document.getElementsById('usernameInputTag').value=myobj.name;
+            document.getElementsById('emailInputTag').value=myobj.email;
+            document.getElementsById('phonoInputTag').value=myobj.phonenumber;
+         }
+         childEle.appendChild(deletebutton);
+         childEle.appendChild(edit);*/
+         parentEle.appendChild(childEle);
+        }
         </script>
     </body>
 </html>
