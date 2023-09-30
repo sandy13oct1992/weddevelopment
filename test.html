@@ -1,0 +1,76 @@
+<html>
+
+<body>
+    <form onsubmit="saveToLocalStorage(event)">
+        <label>Expense amount</label>
+        <input type="number" name="expenseAmount" id="ea">
+        <label>choose discription</label>
+        <input type="text" name="discription" id="cd">
+        <label for="expense">Choose catagory</label>
+
+        <select name="catagory" id="expense">
+            <option value="movie">Movie</option>
+            <option value="food">food</option>
+            <option value="travelling">travelling</option>
+            <option value="other">other</option>
+        </select>
+        <button>Add Expense</button>
+        <ul id="itemlist"></ul>
+    </form>
+    <script>
+        function saveToLocalStorage(event)
+        {
+            event.preventDefault();
+            const amount=event.target.expenseAmount.value;
+            const discription=event.target.discription.value;
+            const catagory=event.target.catagory.value;
+
+            const obj={
+                amount: amount,
+                discription:discription,
+                catagory:catagory
+            }
+            localStorage.setItem(obj.catagory, JSON.stringify(obj));
+
+           showUserOnScreen(obj);
+
+           function showUserOnScreen(obj)
+           {
+            const parentEle=document.getElementById("itemlist");
+            const childEle=document.createElement("li");
+            childEle.textContent=obj.amount+" - "+ obj.discription+" - "+obj.catagory;
+            
+
+            const delet=document.createElement("input");
+            delet.type="button";
+            delet.value="delete";
+            delet.onclick = () =>
+            {
+                localStorage.removeItem(obj.catagory);
+                parentEle.removeChild(childEle);
+            }
+
+            const edit=document.createElement("input");
+            edit.type="button";
+            edit.value="edit";
+            edit.onclick = () =>
+            {
+                localStorage.removeItem(obj.catagory);
+                parentEle.removeChild(childEle);
+                document.getElementById("ea").value=obj.amount;
+                document.getElementById("cd").value=obj.discription;
+                document.getElementById("expense").value=obj.catagory;
+            }
+
+
+            childEle.appendChild(delet);
+            childEle.appendChild(edit);
+
+            parentEle.appendChild(childEle);
+           }
+
+        }
+    </script>
+</body>
+
+</html>
